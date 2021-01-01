@@ -23,20 +23,21 @@ function Nav() {
         console.log(`${name} clicked`)
     }
 
-    
+
 // The return will then show the list of information from the categories shown above via they key(i.e category name in this case)
   return (
     <header>
     <h2>
-    <a href="/">
-      <span role="img" aria-label="camera"> 📸</span> Oh Snap!
-    </a>
+        {/* Add in the data-testid to prevent any CSS or javascript breaks while testing */}
+        <a data-testid="link" href="/">
+          <span role="img" aria-label="camera"> 📸</span> Oh Snap!
+        </a>
     </h2>
     <nav>
         <ul className="flex-row">
 
             <li className="mx-2">
-                <a href="#about">About me</a>
+                <a data-testid="about" href="#about">About me</a>
             </li>
 
             <li>
