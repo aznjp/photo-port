@@ -26,7 +26,8 @@ const [currentCategory, setCurrentCategory] = useState(categories[0]);
         currentCategory={currentCategory}
       ></Nav>
       <main>
-        <Gallery></Gallery>
+        {/* Will send the information through the states in categories shown above and then you can utilize the properties through the sent object */}
+        <Gallery currentCategory={currentCategory}></Gallery>
         <About></About>
       </main>
     </div>

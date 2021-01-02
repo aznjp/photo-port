@@ -3,6 +3,13 @@ import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Nav from '..';
 
+// Added in fake categories to isolate tests and mock runs 
+const categories = [
+  { name: 'portraits', description: 'Portraits of people in my life' }
+]
+const mockCurrentCategory = jest.fn();
+const mockSetCurrentCategory = jest.fn();
+
 afterEach(cleanup);
 
 // Note that the describe function is not absolutely necessary for the test to run; 
@@ -10,7 +17,11 @@ afterEach(cleanup);
 describe('Nav component', () => {
     // baseline test
     it('renders', () => {
-        render(<Nav />);
+        render(<Nav 
+          categories={categories}
+          setCurrentCategory={mockSetCurrentCategory}
+          currentCategory={mockCurrentCategory}
+          />);
       });
    
     // snapshot test

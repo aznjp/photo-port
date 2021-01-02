@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { capitalizeFirstLetter } from "../../utils/helpers";
 
 function Nav(props) {
@@ -12,9 +12,10 @@ const {
   currentCategory,
 } = props;
 
-useEffect(() => {
-    document.title = capitalizeFirstLetter(currentCategory.name);
-}, [currentCategory]);
+const handleClick = (item) => {
+  console.log(item);
+  return item;
+};
 
 // The return will then show the list of information from the categories shown above via they key(i.e category name in this case)
   return (
@@ -32,13 +33,15 @@ useEffect(() => {
                 <a data-testid="about" href="#about">About me</a>
             </li>
 
-            <li>
-                <span>Contact</span>
+            <li className={"mx-2"}>
+              <span onClick={() => handleClick('Contact')}>
+                Contact
+              </span>
             </li>
-
+            {/* Will map through all of the categories and then will account for the change based on the onClick function below */}
             {categories.map((category) => (
                 <li className=
-                {`mx-1 ${currentCategory.name === category.name && 'navActive'}`} 
+                {`mx-1 ${currentCategory.name === category.name }`} 
                 key={category.name}>
 
                     <span onClick = {() => {setCurrentCategory(category)}}>
