@@ -10,12 +10,11 @@ const {
   categories = [],
   setCurrentCategory,
   currentCategory,
+  contactSelected,
+  setContactSelected
 } = props;
 
-const handleClick = (item) => {
-  console.log(item);
-  return item;
-};
+
 
 // The return will then show the list of information from the categories shown above via they key(i.e category name in this case)
   return (
@@ -30,21 +29,26 @@ const handleClick = (item) => {
         <ul className="flex-row">
 
             <li className="mx-2">
-                <a data-testid="about" href="#about">About me</a>
+                <a data-testid="about" href="#about" onClick={() => setContactSelected(false)}>About me</a>
             </li>
 
-            <li className={"mx-2"}>
-              <span onClick={() => handleClick('Contact')}>
+            <li className={`mx-2 ${contactSelected && 'navActive'}`}>
+              <span onClick={() => setContactSelected(true)}>
                 Contact
               </span>
             </li>
             {/* Will map through all of the categories and then will account for the change based on the onClick function below */}
             {categories.map((category) => (
                 <li className=
-                {`mx-1 ${currentCategory.name === category.name }`} 
+                {`mx-1 ${
+                  currentCategory.name === category.name && !contactSelected && `navActive`
+                }`} 
                 key={category.name}>
 
-                    <span onClick = {() => {setCurrentCategory(category)}}>
+                    <span onClick = {() => {
+                      setCurrentCategory(category);
+                      setContactSelected(false);}
+                    }>
                     {capitalizeFirstLetter(category.name)}
                     </span>
                 </li>
