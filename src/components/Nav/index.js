@@ -1,28 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
-function Nav() {
-// List out array to map back to and refer too
-    const categories = [
-        {
-          name: "commercial",
-          description:
-            "Photos of grocery stores, food trucks, and other commercial projects",
-        },
-        { name: "portraits", description: "Portraits of people in my life" },
-        { name: "food", description: "Delicious delicacies" },
-        {
-          name: "landscape",
-          description: "Fields, farmhouses, waterfalls, and the beauty of nature",
-        },
-    ];
+function Nav(props) {
 
-// The onClick() attribute is expecting a callback function declaration. 
-// It's important that we wrap it in a function declaration rather than just calling categorySelected(category.name), 
-// which would cause the function to get called whenever the component renders as well.
-    function categorySelected(name) {
-        console.log(`${name} clicked`)
-    }
+// Instead, we’re going to “lift” the state up one level. 
+// Whenever you think state needs to be used in multiple sibling components, 
+// it's normally a good idea to lift the state up until it can be passed as props to any child components that need it. 
+const {
+  categories = [],
+  setCurrentCategory,
+  currentCategory,
+} = props;
 
+useEffect(() => {
+    document.title = capitalizeFirstLetter(currentCategory.name);
+}, [currentCategory]);
 
 // The return will then show the list of information from the categories shown above via they key(i.e category name in this case)
   return (
@@ -45,9 +37,12 @@ function Nav() {
             </li>
 
             {categories.map((category) => (
-                <li className="mx-1" key={category.name}>
-                    <span onClick = {categorySelected}>
-                        {category.name}
+                <li className=
+                {`mx-1 ${currentCategory.name === category.name && 'navActive'}`} 
+                key={category.name}>
+
+                    <span onClick = {() => {setCurrentCategory(category)}}>
+                    {capitalizeFirstLetter(category.name)}
                     </span>
                 </li>
             ))}
