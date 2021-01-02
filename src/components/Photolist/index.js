@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 // useState is utilized to go through each of the photo names and descriptions in the array via the category
 
+import Modal from '../Modal';
 // This object is sent through from the props inputs through the Gallery component through the return
 //  
 const PhotoList = ({ category }) => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [photos] = useState([
       {
@@ -105,8 +108,21 @@ const PhotoList = ({ category }) => {
 // This variable will filter through the arry and make them equivalent to the category in question
     const currentPhotos = photos.filter((photo) => photo.category === category);
 // The return will then use the map function through this filtered new array and then display all the images through the array in order
+
+// Move through modal and will allow to move through images via states
+// Will toggle isModalOpen from true to false and vice versa with this new !isModalOpen condition
+const [currentPhoto, setCurrentPhoto] = useState();
+const toggleModal = (image, i) => {
+  // current photo
+  setCurrentPhoto({...image, index: i});
+  setIsModalOpen(!isModalOpen);
+}
+
   return (
     <div>
+      {isModalOpen && (
+      <Modal currentPhoto={currentPhoto} onClose={toggleModal} />
+      )}
       <div className="flex-row">
       {currentPhotos.map((image, i) => (
           <img
@@ -114,6 +130,7 @@ const PhotoList = ({ category }) => {
             src={require(`../../assets/small/${category}/${i}.jpg`).default}
             alt={image.name}
             className="img-thumbnail mx-1"
+            onClick={() => toggleModal(image, i)}
             key={image.name}
           />
         ))}
